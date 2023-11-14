@@ -11,13 +11,13 @@
 
 - name: Creating a directory for packages
   file:
-    path: /home/userver/docker-deb
+    path: /home/joshxh/docker-deb
     state: directory
 
 - name: Downloading docker components
   get_url:
     url: "https://download.docker.com/linux/ubuntu/dists/jammy/pool/stable/amd64/{{ item }}"
-    dest: /home/userver/docker-deb
+    dest: /home/joshxh/docker-deb
   with_items:
     - "{{ docker_apps.containerd }}.deb"
     - "{{ docker_apps.docker_ce_cli }}.deb"
@@ -26,7 +26,7 @@
 
 - name: Installing docker components
   shell: |
-    cd /home/userver/docker-deb
+    cd /home/joshxh/docker-deb
     dpkg -i "{{ item }}"
   with_items:
     - "{{ docker_apps.containerd }}.deb"
@@ -44,7 +44,7 @@
 
 - name: Adding docker to the group of the current user
   user:
-    name: userver
+    name: joshxh
     groups: docker
     append: yes
 
@@ -77,7 +77,7 @@
 
 - block:
   - name: Verifying user groups
-    shell: groups userver
+    shell: groups joshxh
     register: user_groups
 
   - debug:
@@ -90,5 +90,4 @@
 
   - debug:
       msg="{{ docker_installation }}"
-
 

@@ -6,10 +6,10 @@
 
 - name: Copying the Dockerfile
   copy:
-    remote_src: dockerfile
+    src: /home/joshxh/CPE232_DARROCA/HOA11/docker/dockerfiles/dockerfile
     dest: /home/joshxh/docker_config
     owner: joshxh
-    group: joshxh
+    group: docker
   changed_when: false
 
 - name: Creating volume
@@ -44,3 +44,9 @@
 
   - debug:
       msg="{{ container_status }}"
+
+- name: dockerfile run
+  shell: |
+    cd dockerfile
+    sudo docker build -t HOA11:11
+    docker run -it -d -p 8080:80 HOA11:11
